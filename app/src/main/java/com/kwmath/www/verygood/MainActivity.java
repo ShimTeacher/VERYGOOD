@@ -3,35 +3,56 @@ package com.kwmath.www.verygood;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Activity;
-
-
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.drawable.Drawable;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import java.util.Calendar;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements
+        TimePickerDialog.OnTimeSetListener,
+        DatePickerDialog.OnDateSetListener{
 
     FragmentManager manager;
     FragmentTransaction trans;
 
     homeFragment homeFg;
-    calenderFragment calenderFg = new calenderFragment();
+    calendarFragment calenderFg = new calendarFragment();
     developerPageFragment developerFg  = new developerPageFragment();
     donationFragment donationFg = new donationFragment();
     alarmFragment alarmFg = new alarmFragment();
 
+
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
+        String minuteString = minute < 10 ? "0"+minute : ""+minute;
+        String secondString = second < 10 ? "0"+second : ""+second;
+        String time = "You picked the following time: "+hourString+"h"+minuteString+"m"+secondString+"s";
+        Toast.makeText(getApplicationContext(),time,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+        Toast.makeText(getApplicationContext(),date,Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +64,12 @@ public class MainActivity extends Activity {
 
 
 
+
     }
 
 
     public void menuItemSetting()
     {
-
 
 
         //**********************************Circular Floating Menu Button 라이브러리 코드****************************//
@@ -128,9 +149,20 @@ public class MainActivity extends Activity {
         calendar_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                trans = manager.beginTransaction();
-                trans.replace(R.id.home_fg, calenderFg);
-                trans.commit();
+
+//                trans = manager.beginTransaction();
+//                trans.replace(R.id.home_fg, calenderFg);
+//                trans.commit();
+
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog dpd = DatePickerDialog.newInstance(
+                        MainActivity.this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                );
+                dpd.show(getFragmentManager(), "Datepickerdialog");
+
 
             }
         });
@@ -157,12 +189,29 @@ public class MainActivity extends Activity {
         alarm_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                trans = manager.beginTransaction();
-                trans.replace(R.id.home_fg, alarmFg);
-                trans.commit();
+//                trans = manager.beginTransaction();
+//                trans.replace(R.id.home_fg, alarmFg);
+//                trans.commit();
+
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog tpd = TimePickerDialog.newInstance(
+                        MainActivity.this,
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        false
+                );
+                tpd.setThemeDark(false);
+                tpd.vibrate(true);
+                tpd.dismissOnPause(true);
+                tpd.enableSeconds(false);
+
+                tpd.show(getFragmentManager(), "Timepickerdialog");
 
             }
         });
+
+
 
     }
 
