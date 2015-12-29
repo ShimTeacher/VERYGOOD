@@ -142,6 +142,7 @@ public class MainActivity extends Activity implements
             public void onClick(View view) {
                 trans = manager.beginTransaction();
                 trans.replace(R.id.home_fg, homeFg);
+                trans.addToBackStack(null);
                 trans.commit();
             }
         });
@@ -172,6 +173,7 @@ public class MainActivity extends Activity implements
             public void onClick(View view) {
                 trans = manager.beginTransaction();
                 trans.replace(R.id.home_fg, developerFg);
+                trans.addToBackStack(null);
                 trans.commit();
 
             }
@@ -182,6 +184,7 @@ public class MainActivity extends Activity implements
             public void onClick(View view) {
                 trans = manager.beginTransaction();
                 trans.replace(R.id.home_fg, donationFg);
+                trans.addToBackStack(null);
                 trans.commit();
 
             }

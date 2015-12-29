@@ -4,8 +4,13 @@
     android:layout_height="match_parent"
     tools:context="com.kwmath.www.verygood.donationFragment"
     android:orientation="vertical"
-    android:background="#fffffd02"
+    android:background="#ff0424ff"
     >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Donation 페이지"/>
 
 
 </LinearLayout>
