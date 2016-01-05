@@ -8,10 +8,14 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -29,6 +33,8 @@ public class MainActivity extends Activity implements
         TimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateSetListener{
 
+
+
     FragmentManager manager;
     FragmentTransaction trans;
 
@@ -37,22 +43,11 @@ public class MainActivity extends Activity implements
     developerPageFragment developerFg  = new developerPageFragment();
     donationFragment donationFg = new donationFragment();
     alarmFragment alarmFg = new alarmFragment();
+    ImageView img;
 
 
-    @Override
-    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-        String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
-        String minuteString = minute < 10 ? "0"+minute : ""+minute;
-        String secondString = second < 10 ? "0"+second : ""+second;
-        String time = "You picked the following time: "+hourString+"h"+minuteString+"m"+secondString+"s";
-        Toast.makeText(getApplicationContext(),time,Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
-        Toast.makeText(getApplicationContext(),date,Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +55,15 @@ public class MainActivity extends Activity implements
         setContentView(R.layout.activity_main);
 
         menuItemSetting(); //반드시 이 위치에 실행되어야 한다.
+        img =(ImageView) findViewById(R.id.goodBtn);
 
 
 
 
 
     }
+
+
 
 
     public void menuItemSetting()
@@ -134,46 +132,37 @@ public class MainActivity extends Activity implements
         //**********************************Circular Floating Menu Button 라이브러리 코드****************************//
 
 
+
+
+
+
+        //이 부분에서 메뉴아이콘들의 Listener를 달아준다
+        //이 부분에서 메뉴아이콘들의 Listener를 달아준다
+        //이 부분에서 메뉴아이콘들의 Listener를 달아준다
+        //이 부분에서 메뉴아이콘들의 Listener를 달아준다
+        //이 부분에서 메뉴아이콘들의 Listener를 달아준다
+
         manager = getFragmentManager();
         homeFg = (homeFragment)manager.findFragmentById(R.id.home_fg);
 
         home_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img.setEnabled(true);
                 trans = manager.beginTransaction();
                 trans.replace(R.id.home_fg, homeFg);
-                trans.addToBackStack(null);
                 trans.commit();
             }
         });
 
-        calendar_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-//                trans = manager.beginTransaction();
-//                trans.replace(R.id.home_fg, calenderFg);
-//                trans.commit();
-
-                Calendar now = Calendar.getInstance();
-                DatePickerDialog dpd = DatePickerDialog.newInstance(
-                        MainActivity.this,
-                        now.get(Calendar.YEAR),
-                        now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH)
-                );
-                dpd.show(getFragmentManager(), "Datepickerdialog");
-
-
-            }
-        });
 
         info_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img.setEnabled(false);
                 trans = manager.beginTransaction();
                 trans.replace(R.id.home_fg, developerFg);
-                trans.addToBackStack(null);
                 trans.commit();
 
             }
@@ -182,46 +171,34 @@ public class MainActivity extends Activity implements
         dollar_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img.setEnabled(false);
                 trans = manager.beginTransaction();
                 trans.replace(R.id.home_fg, donationFg);
-                trans.addToBackStack(null);
                 trans.commit();
 
             }
         });
-        alarm_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                trans = manager.beginTransaction();
-//                trans.replace(R.id.home_fg, alarmFg);
-//                trans.commit();
 
-
-                Calendar now = Calendar.getInstance();
-                TimePickerDialog tpd = TimePickerDialog.newInstance(
-                        MainActivity.this,
-                        now.get(Calendar.HOUR_OF_DAY),
-                        now.get(Calendar.MINUTE),
-                        false
-                );
-                tpd.setThemeDark(false);
-                tpd.vibrate(true);
-                tpd.dismissOnPause(true);
-                tpd.enableSeconds(false);
-
-                tpd.show(getFragmentManager(), "Timepickerdialog");
-
-            }
-        });
 
 
 
     }
 
 
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
+        String minuteString = minute < 10 ? "0"+minute : ""+minute;
+        String secondString = second < 10 ? "0"+second : ""+second;
+        String time = "You picked the following time: "+hourString+"h"+minuteString+"m"+secondString+"s";
+        Toast.makeText(getApplicationContext(),time,Toast.LENGTH_SHORT).show();
+    }
 
-
-
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+        Toast.makeText(getApplicationContext(),date,Toast.LENGTH_SHORT).show();
+    }
 
 
     @Override

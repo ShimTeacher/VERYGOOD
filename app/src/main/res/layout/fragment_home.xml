@@ -1,19 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kwmath.www.verygood.homeFragment"
-    android:background="#ffff000f"
-    android:orientation="horizontal"
-    >
+    android:background="#000000">
 
-
-
-    <TextView
-
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="기본 홈 페이지"
-    />
+        android:id="@+id/goodBtn"
+        android:src="@drawable/black"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+        android:cropToPadding="false"
+        android:nestedScrollingEnabled="false"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="80dp" />
 
-</RelativeLayout>
+
+</FrameLayout>
