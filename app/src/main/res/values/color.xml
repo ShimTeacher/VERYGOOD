@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="date_picker_accent">#f01a0d00</color>
+    <color name="chosen_header_bg_color">#fff000</color>
+    <color name="mdtp_accent_color">#009688</color>
+    <color name="mdtp_accent_color_dark">#00796b</color>
+    <color name="mdtp_date_picker_text_highlighted">#ff960004</color>
+
+</resources>

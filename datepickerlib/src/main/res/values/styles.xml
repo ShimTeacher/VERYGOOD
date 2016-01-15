@@ -53,7 +53,7 @@
         <item name="android:minWidth">@dimen/mdtp_material_button_minwidth</item>
         <item name="android:paddingLeft">@dimen/mdtp_material_button_textpadding_horizontal</item>
         <item name="android:paddingRight">@dimen/mdtp_material_button_textpadding_horizontal</item>
-        <item name="android:textColor">@color/mdtp_button_color</item>
+        <item name="android:textColor">#ffffff</item>
         <item name="android:textAllCaps">true</item>
     </style>
 </resources>

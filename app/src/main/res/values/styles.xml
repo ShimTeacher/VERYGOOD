@@ -1,8 +1,23 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Material.Light">
         <!-- Customize your theme here. -->
+        <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item>
     </style>
 
+
+    <style name="MyDatePickerDialogTheme" parent="">
+        <item name="android:colorAccent">@color/date_picker_accent</item>
+
+    </style>
+
+    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">
+        <item name="android:headerBackground">@color/chosen_header_bg_color</item>
+    </style>
+
+
+    <style name="MyThemeOverlay">
+        <item name="android:colorAccent">#000000</item>
+    </style>
 </resources>

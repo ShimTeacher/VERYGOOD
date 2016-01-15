@@ -1,114 +1,158 @@
 package com.kwmath.www.verygood;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
+
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.rey.material.widget.FloatingActionButton;
-
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class homeFragment extends Fragment {
 
-    boolean isclicked = false;
+    public static final String TAG = homeFragment.class.getSimpleName();
+    static boolean isclicked = false;
+
     View view;
     ImageView img;
-    SharedPreferences mPref;
+    public static SharedPreferences mPref;
+    TextView textView;
+    java.util.Date today = new java.util.Date();
+    String todayString;
 
-    @Override
-    public void onStart() {
+    DbOpenHelper dbOpenhelper;
+    String dbYear; //데이터베이스에 넣을 Year, Month, Day
+    String dbDay;
+    String dbMonth;
+
+    Vibrator vibe;
+    long[] pattern = {100, 100, 100, 100, 100, 500};
 
 
-        //시작과 동시에 이전에 따봉버튼을 눌렀는지 확인한다
-        isclicked = mPref.getBoolean("key", false);
-        if(isclicked)
-        {
-            img.setImageResource(R.drawable.white);
-        }
 
-        super.onStart();
-    }
 
-    void setCheckValue()
-    {
-        SharedPreferences.Editor editor = mPref.edit();
-        editor.putBoolean("key", isclicked);
-        editor.commit();
-    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        mPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        textView = (TextView)view.findViewById(R.id.timeText);
+        img  = (ImageView)view.findViewById(R.id.goodBtn);
 
 
 
+        //날짜 셋팅.
+        SimpleDateFormat formatTime = new SimpleDateFormat("EEE, dd MMM yyyy", Locale.ENGLISH);
+        SimpleDateFormat formatTimeYear = new SimpleDateFormat("yyyy", Locale.ENGLISH);
+        SimpleDateFormat formatTimeDay = new SimpleDateFormat("dd", Locale.ENGLISH);
+        SimpleDateFormat formatTimeMonth = new SimpleDateFormat("MM", Locale.ENGLISH);
+        dbYear = formatTimeYear.format(today);
+        dbDay = formatTimeDay.format(today);
+        dbMonth = formatTimeMonth.format(today);
+        todayString = formatTime.format(today);
+        textView.setText(todayString);
 
-        img = (ImageView)view.findViewById(R.id.goodBtn);
+        //리스너 등록
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isclicked) {
-                    Vibrator vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                    long[] pattern = {100, 100, 100, 100, 100, 500};          // 진동, 무진동, 진동 무진동 숫으로 시간을 설정한다.
-                    vibe.vibrate(pattern, -1);                                         // 패턴을 지정하고 반복횟수를 지정
-                    img.setImageResource(R.drawable.white);
-                    isclicked = true;
+                if (!isclicked) { //클릭되어있지 않았다면
+                    vibe.vibrate(pattern, -1);
+                    sqlAction();
 
-                }
-                else {
-                    new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                } else { //클릭되어 있다면
+                    SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Are you sure?")
                             .setContentText("It will be unchecked.")
                             .setConfirmText("Yes,I want to uncheck it!")
                             .setCancelText("No")
+                            .showCancelButton(true)
+
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sDialog) {
                                     img.setImageResource(R.drawable.black);
                                     sDialog
                                             .setTitleText("Unchecked!")
-                                            .setContentText("Your ThumbsUpButton has been unchecked!")
+                                            .setContentText("ThumbsUP has been unchecked!")
                                             .setConfirmText("OK")
-
                                             .setConfirmClickListener(null)
                                             .showCancelButton(false)
                                             .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     isclicked = false;
                                 }
-                            })
-                            .show();
+                            });
 
+                    sweetAlertDialog.setCancelable(true);
+                    sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.cancel();
+                            sqlAction();
+                        }
+                    }).show();
 
+                    dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 0);
                 }
-                setCheckValue();
             }
         });
-
-
 
         img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                img.setImageResource(R.drawable.white);
-                isclicked = true;
+                sqlAction();
                 return true;
             }
         });
+
+        try {
+            dbOpenhelper = new DbOpenHelper(getActivity());
+            dbOpenhelper.open();
+
+        }catch (Exception e)
+        {
+            Log.v(TAG,"데이터베이스 열리지 않습니다");
+        }
+
+        if(hasTodayDB())
+        {
+            //오늘자 데이터베이스가 있다면 checked값을 돌려받자
+            String sql = "SELECT checked FROM " + DatabaseHelper._TABLENAME + " WHERE year = " + dbYear + " and month = " + dbMonth + " and day = " + dbDay + "; ";
+            Cursor cursor = dbOpenhelper.ReturnCursorInSql(sql);
+            cursor.moveToFirst();
+            int dbChecked = new Integer(cursor.getString(0));
+
+            if(dbChecked==1)
+            {
+                img.setImageResource(R.drawable.white);
+                isclicked = true;
+            }
+            else {
+                img.setImageResource(R.drawable.black);
+                isclicked = false;
+            }
+
+
+        }
+        else
+        {
+            Toast.makeText(getActivity(),"오늘도 좋은 하루 보내셨나요? ",Toast.LENGTH_SHORT).show();
+            img.setImageResource(R.drawable.black);
+            isclicked = false;
+         }
 
 
 
@@ -116,6 +160,41 @@ public class homeFragment extends Fragment {
     }
 
 
+
+
+    void sqlAction()
+    {
+
+        isclicked = true;
+        img.setImageResource(R.drawable.white);
+
+        String findSQL = "SELECT * FROM " + DatabaseHelper._TABLENAME + " WHERE year = " + dbYear + " and month = " + dbMonth + " and day = " + dbDay + "; ";
+
+        Cursor cursor = dbOpenhelper.ReturnCursorInSql(findSQL);
+        cursor.moveToFirst();
+        if(cursor.getCount()==0)
+        {
+            dbOpenhelper.insertRow(dbYear, dbMonth, dbDay, 1);
+        }
+        else {
+            dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 1);
+        }
+
+    }
+
+    boolean hasTodayDB()
+    {
+        String sql = "SELECT * FROM " + DatabaseHelper._TABLENAME + " WHERE year = " + dbYear + " and month = " + dbMonth + " and day = " + dbDay + "; ";
+
+        Cursor cursor =  dbOpenhelper.ReturnCursorInSql(sql);
+        cursor.moveToFirst();
+        if(cursor.getCount()==0)
+            return false;
+
+        else
+            return true;
+
+    }
 
 
 

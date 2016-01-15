@@ -63,12 +63,20 @@
     <com.wdullaer.materialdatetimepicker.AccessibleTextView
         android:id="@+id/date_picker_year"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_height="0dp"
         android:gravity="center_horizontal|top"
         android:includeFontPadding="false"
         android:textColor="@color/mdtp_date_picker_selector"
         android:textSize="@dimen/mdtp_selected_date_year_size"
-        tools:text="2015" />
+        tools:text="" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:textSize="15dp"
+        android:id="@+id/msgView"
+        android:textColor="#ffffff"
+        android:gravity="center_horizontal|top" />
 
 </LinearLayout>

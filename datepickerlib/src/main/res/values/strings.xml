@@ -19,6 +19,9 @@
     <!-- Label for button to confirm chosen date or time [CHAR LIMIT=30] -->
     <string name="mdtp_done_label">Done</string>
     <string name="mdtp_ok">@android:string/ok</string>
+    <string name="mdtp_365">0/365</string>
+    <string name="mdtp_month">0/31</string>
+    <string name="mdtp_msg">verygood</string>
     <string name="mdtp_cancel">@android:string/cancel</string>
     <!--
          Content description for the hour selector in the time picker, which displays
