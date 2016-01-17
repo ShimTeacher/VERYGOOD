@@ -39,10 +39,6 @@ import java.util.Calendar;
     //TODO 만든이 -> 이미지정보 간단한 프로필을 보여준다.
 
 public class MainActivity extends Activity implements DatePickerDialog.OnDateSetListener, com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener{
-    @Override
-    public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1, int i2) {
-
-    }
 
 
     DbOpenHelper dbOpenhelper;
@@ -235,7 +231,6 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
                     dpd.setAccentColor(getResources().getColor(R.color.date_picker_accent));
                     dpd.setThemeDark(true);
                     dpd.setCancelable(false);
-
                     dpd.setDB(dbOpenhelper.getDB());
                     dpd.setMonthText("");
                     DbOpenHelper dbOpenhelper;
@@ -252,18 +247,12 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
                     String highlightMonth = myCursor.getString(0);
                     //"SELECT * FROM " + DatabaseHelper._TABLENAME + " WHERE year = " + dbYear + " and month = " + dbMonth + " and day = " + dbDay + "; ";
 
-
                     String highlightDays = new Integer(dpd.getSelectableDays().length-temp).toString();
                     dpd.set365Text(highlightDays+ "/365");
                     Calendar today = Calendar.getInstance();
                     dpd.setMonthText(highlightMonth+"/"+today.getActualMaximum(Calendar.DATE));
-
-
                     dpd.show(getFragmentManager(), "Datepickerdialog");
 
-    //                trans = manager.beginTransaction();
-    //                trans.replace(R.id.home_fg, calenderFg);
-    //                trans.commit();
                 }catch (Exception e) {
 
                 }
@@ -297,7 +286,10 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
     }
 
 
+    @Override
+    public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1, int i2) {
 
+    }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {

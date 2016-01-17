@@ -37,7 +37,7 @@ public class homeFragment extends Fragment {
     String dbYear; //데이터베이스에 넣을 Year, Month, Day
     String dbDay;
     String dbMonth;
-
+    String basicString = " ";
     Vibrator vibe;
     long[] pattern = {100, 100, 100, 100, 100, 500};
 
@@ -55,8 +55,9 @@ public class homeFragment extends Fragment {
                 .setContentText("It will be unchecked.")
                 .setConfirmText("Yes,I want to uncheck it!")
                 .setCancelText("No")
-
                 .showCancelButton(true)
+
+
 
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
@@ -70,21 +71,20 @@ public class homeFragment extends Fragment {
                                 .showCancelButton(false)
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                         isclicked = false;
-                        dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 0,"no message");
+                        dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 0, basicString);
                         CheckDB();
                     }
                 });
 
-        sweetAlertDialog.setCancelable(true);
-        sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                sweetAlertDialog.cancel();
 
 
-                //취소했을대는 원래 상태로 돌아가야한다
-            }
-        }).show();
+                sweetAlertDialog.setCancelable(true);
+                sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.cancel();
+                    }
+                }).show();
 
 
 
@@ -237,13 +237,14 @@ public class homeFragment extends Fragment {
         cursor.moveToFirst();
         if(cursor.getCount()==0)
         {
-            dbOpenhelper.insertRow(dbYear, dbMonth, dbDay, 1,"no message");
+            dbOpenhelper.insertRow(dbYear, dbMonth, dbDay, 1, basicString);
         }
         else {
-            dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 1, "no message");
+            dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 1, basicString);
         }
         CheckDB();
     }
+
     void sqlActionWithMsg(String str)
     {
         isclicked = true;
