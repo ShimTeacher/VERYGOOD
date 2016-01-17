@@ -7,4 +7,7 @@
     <color name="mdtp_accent_color_dark">#00796b</color>
     <color name="mdtp_date_picker_text_highlighted">#ff960004</color>
 
+    <color name="dark">#FF222222</color>
+    <color name="light">#FFEEEEEE</color>
+
 </resources>

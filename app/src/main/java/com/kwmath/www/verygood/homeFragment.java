@@ -32,7 +32,7 @@ public class homeFragment extends Fragment {
     TextView textView;
     java.util.Date today = new java.util.Date();
     String todayString;
-
+    public static TextView testText;
     DbOpenHelper dbOpenhelper;
     String dbYear; //데이터베이스에 넣을 Year, Month, Day
     String dbDay;
@@ -42,8 +42,65 @@ public class homeFragment extends Fragment {
     long[] pattern = {100, 100, 100, 100, 100, 500};
 
 
+    public void CheckDB()
+    {
+        dbOpenhelper.allSelect();
+
+    }
+
+    public void isclickedFunc()
+    {
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Are you sure?")
+                .setContentText("It will be unchecked.")
+                .setConfirmText("Yes,I want to uncheck it!")
+                .setCancelText("No")
+
+                .showCancelButton(true)
+
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        img.setImageResource(R.drawable.black);
+                        sDialog
+                                .setTitleText("Unchecked!")
+                                .setContentText("ThumbsUP has been unchecked!")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(null)
+                                .showCancelButton(false)
+                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                        isclicked = false;
+                        dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 0,"no message");
+                        CheckDB();
+                    }
+                });
+
+        sweetAlertDialog.setCancelable(true);
+        sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                sweetAlertDialog.cancel();
 
 
+                //취소했을대는 원래 상태로 돌아가야한다
+            }
+        }).show();
+
+
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        System.gc();
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onPause() {
+
+        super.onPause();
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,16 +110,17 @@ public class homeFragment extends Fragment {
         img  = (ImageView)view.findViewById(R.id.goodBtn);
 
 
-
         //날짜 셋팅.
         SimpleDateFormat formatTime = new SimpleDateFormat("EEE, dd MMM yyyy", Locale.ENGLISH);
         SimpleDateFormat formatTimeYear = new SimpleDateFormat("yyyy", Locale.ENGLISH);
         SimpleDateFormat formatTimeDay = new SimpleDateFormat("dd", Locale.ENGLISH);
         SimpleDateFormat formatTimeMonth = new SimpleDateFormat("MM", Locale.ENGLISH);
+
         dbYear = formatTimeYear.format(today);
         dbDay = formatTimeDay.format(today);
         dbMonth = formatTimeMonth.format(today);
         todayString = formatTime.format(today);
+
         textView.setText(todayString);
 
         //리스너 등록
@@ -74,38 +132,7 @@ public class homeFragment extends Fragment {
                     sqlAction();
 
                 } else { //클릭되어 있다면
-                    SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Are you sure?")
-                            .setContentText("It will be unchecked.")
-                            .setConfirmText("Yes,I want to uncheck it!")
-                            .setCancelText("No")
-                            .showCancelButton(true)
-
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    img.setImageResource(R.drawable.black);
-                                    sDialog
-                                            .setTitleText("Unchecked!")
-                                            .setContentText("ThumbsUP has been unchecked!")
-                                            .setConfirmText("OK")
-                                            .setConfirmClickListener(null)
-                                            .showCancelButton(false)
-                                            .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                                    isclicked = false;
-                                }
-                            });
-
-                    sweetAlertDialog.setCancelable(true);
-                    sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            sweetAlertDialog.cancel();
-                            sqlAction();
-                        }
-                    }).show();
-
-                    dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 0);
+                    isclickedFunc();
                 }
             }
         });
@@ -113,9 +140,45 @@ public class homeFragment extends Fragment {
         img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                sqlAction();
+
+                if (!isclicked) { //클릭되어있지 않았다면
+
+                    SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.CUSTOM_IMAGE_TYPE);
+                    sweetAlertDialog.setTitleText("Very Good!")
+                            .setContentText(" How about record your today's best moments?")
+                            .setCustomImage(R.drawable.white)
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    vibe.vibrate(pattern, -1);
+                                    String EditMessage = sweetAlertDialog.getEditTextString();
+                                    sqlActionWithMsg(EditMessage);
+                                    sweetAlertDialog.dismissWithAnimation();
+                                }
+                            })
+                            .show();
+
+
+
+                }else{
+                    isclickedFunc();
+
+                }
+
+
                 return true;
             }
+
+
+            //Test입니다 적당히 워줘야 합니다지//Test입니다 적당히 워줘야 합니다지//Test입니다 적당히 워줘야 합니다지//Test입니다 적당히 워줘야 합니다지
+            //Test입니다 적당히 워줘야 합니다지//Test입니다 적당히 워줘야 합니다지//Test입니다 적당히 워줘야 합니다지//Test입니다 적당히 워줘야 합니다지
+
+
+
+
+
+
+
         });
 
         try {
@@ -174,12 +237,30 @@ public class homeFragment extends Fragment {
         cursor.moveToFirst();
         if(cursor.getCount()==0)
         {
-            dbOpenhelper.insertRow(dbYear, dbMonth, dbDay, 1);
+            dbOpenhelper.insertRow(dbYear, dbMonth, dbDay, 1,"no message");
         }
         else {
-            dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 1);
+            dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 1, "no message");
         }
+        CheckDB();
+    }
+    void sqlActionWithMsg(String str)
+    {
+        isclicked = true;
+        img.setImageResource(R.drawable.white);
 
+        String findSQL = "SELECT * FROM " + DatabaseHelper._TABLENAME + " WHERE year = " + dbYear + " and month = " + dbMonth + " and day = " + dbDay + "; ";
+
+        Cursor cursor = dbOpenhelper.ReturnCursorInSql(findSQL);
+        cursor.moveToFirst();
+        if(cursor.getCount()==0)
+        {
+            dbOpenhelper.insertRow(dbYear, dbMonth, dbDay, 1, str);
+        }
+        else {
+            dbOpenhelper.updateRow(dbYear, dbMonth, dbDay, 1, str);
+        }
+        CheckDB();
     }
 
     boolean hasTodayDB()

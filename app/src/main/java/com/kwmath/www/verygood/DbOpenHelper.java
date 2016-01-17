@@ -27,11 +27,15 @@ public class DbOpenHelper {
         return dbHelper;
     }
 
-    public void insertRow(String year,String month,String day,int checked){
-        db.execSQL("insert into "+DatabaseHelper._TABLENAME+" (year,month,day,checked) values(" + year + "," + month + "," + day + "," + new Integer(checked).toString() + ");");
+    public SQLiteDatabase getDB()
+    {
+        return db;
     }
-    public void updateRow(String year,String month,String day,int checked){
-        db.execSQL("update "+DatabaseHelper._TABLENAME+" set checked = " + new Integer(checked).toString() + " WHERE year='" + year + "' and month ='" + month + "' and day= '" + day + "';");
+    public void insertRow(String year,String month,String day,int checked, String msg){
+        db.execSQL("insert into "+DatabaseHelper._TABLENAME+" (year,month,day,checked,msg) values(" + year + "," + month + "," + day + "," + new Integer(checked).toString() + ",'"+ msg +"');");
+    }
+    public void updateRow(String year,String month,String day,int checked, String msg){
+        db.execSQL("update "+DatabaseHelper._TABLENAME+" set checked = " + new Integer(checked).toString() +" , msg = '"+msg+"' "+" WHERE year='" + year + "' and month ='" + month + "' and day= '" + day + "';");
     }
 
     public Cursor allSelect(){
@@ -45,7 +49,7 @@ public class DbOpenHelper {
         else {
             if(cursor.moveToFirst()){
                 do{
-                    str += cursor.getString(0)+ " " + cursor.getString(1)+ " " + cursor.getString(2)+ " " + cursor.getString(3)+" "+cursor.getString(4) + "\n";
+                    str += cursor.getString(0)+ " " + cursor.getString(1)+ " " + cursor.getString(2)+ " " + cursor.getString(3)+" "+cursor.getString(4) + " " +cursor.getString(5)+"\n";
 
                 }while(cursor.moveToNext());
                 Log.v("asdf",str);

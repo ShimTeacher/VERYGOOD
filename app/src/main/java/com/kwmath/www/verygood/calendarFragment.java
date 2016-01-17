@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.github.sundeepk.compactcalendarview.CompactCalendarView;
-import com.roomorama.caldroid.CaldroidFragment;
 
 import java.util.Calendar;
 import java.util.Locale;

@@ -14,6 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String MONTH = "month";
     public static final String DAY = "day";
     public static final String CHECKED = "checked";
+    public static final String MSG = "msg";
 
 
     public static final String _TABLENAME = "diary";
@@ -22,7 +23,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     +YEAR+" INTEGER NOT NULL , "
                     +MONTH+" INTEGER NOT NULL , "
                     +DAY+" INTEGER NOT NULL , "
-                    +CHECKED+" INTEGER NOT NULL );";
+                    +CHECKED+" INTEGER NOT NULL , "
+                    +MSG+" VARCHAR(80) );";
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

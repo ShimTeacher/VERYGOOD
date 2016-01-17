@@ -9,6 +9,8 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.date.MonthAdapter;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,8 +59,7 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActionBar actionBar = getActionBar();
-        actionBar.hide();
+
 
         menuItemSetting(); //반드시 이 위치에 실행되어야 한다.
         img =(ImageView) findViewById(R.id.goodBtn);
@@ -104,7 +106,7 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
         final FloatingActionMenu rightLowerMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(rLSubBuilder.setContentView(info_icon).build())
                 .addSubActionView(rLSubBuilder.setContentView(dollar_icon).build())
-                .addSubActionView(rLSubBuilder.setContentView(alarm_icon).build())
+                //.addSubActionView(rLSubBuilder.setContentView(alarm_icon).build())
                 .addSubActionView(rLSubBuilder.setContentView(calendar_icon).build())
                 .addSubActionView(rLSubBuilder.setContentView(home_icon).build())
                 .attachTo(rightLowerButton)
@@ -183,7 +185,7 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
 
 
                 Cursor cursor = dbOpenhelper.allSelect();
-
+                int temp=0;
                 try{
 
                     Calendar cal;
@@ -195,6 +197,7 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
                         cal= Calendar.getInstance();
                         cal.set(2016,11,31);
                         CalendarList.add(cal);
+                        temp=1;
                     }
                     else {
                         if (cursor.moveToFirst()) {
@@ -210,16 +213,19 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
                                     cal = Calendar.getInstance();
                                     cal.set(dbYear, dbMonth, dbDay);
                                     CalendarList.add(cal);
+                                    temp=0;
                                 }
                                 else {
                                     cal= Calendar.getInstance();
                                     cal.set(2016,11,31);
                                     CalendarList.add(cal);
+                                    temp=1;
                                 }
 
                             } while (cursor.moveToNext());
                         }
                     }
+
 
 
                     //Integer[] place = al3.toArray(new Integer[al.size()]);
@@ -228,22 +234,31 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
                     dpd.setHighlightedDays(calendars);
                     dpd.setAccentColor(getResources().getColor(R.color.date_picker_accent));
                     dpd.setThemeDark(true);
-                    dpd.setCancelText("1/31");
+                    dpd.setCancelable(false);
 
-                    dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePickerDialog datePickerDialog, int i, int i1, int i2) {
-                            Toast.makeText(getApplicationContext(),"클릭 ~ ",Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    dpd.setDB(dbOpenhelper.getDB());
+                    dpd.setMonthText("");
+                    DbOpenHelper dbOpenhelper;
+                        Cursor myCursor=null;
+                    try {
+                        dbOpenhelper = new DbOpenHelper(getApplicationContext());
+                        dbOpenhelper.open();
+                        myCursor = dbOpenhelper.ReturnCursorInSql("SELECT COUNT(id) FROM " + DatabaseHelper._TABLENAME + " WHERE month = " + now.get(Calendar.MONTH)+1 + " and checked = 1;");
+                    }catch (Exception e)
+                    {
 
-                    dpd.setCancelable(true);
-                    dpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialogInterface) {
-                            Toast.makeText(getApplicationContext(),"취소 ~ ",Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    }
+                    myCursor.moveToFirst();
+                    String highlightMonth = myCursor.getString(0);
+                    //"SELECT * FROM " + DatabaseHelper._TABLENAME + " WHERE year = " + dbYear + " and month = " + dbMonth + " and day = " + dbDay + "; ";
+
+
+                    String highlightDays = new Integer(dpd.getSelectableDays().length-temp).toString();
+                    dpd.set365Text(highlightDays+ "/365");
+                    Calendar today = Calendar.getInstance();
+                    dpd.setMonthText(highlightMonth+"/"+today.getActualMaximum(Calendar.DATE));
+
+
                     dpd.show(getFragmentManager(), "Datepickerdialog");
 
     //                trans = manager.beginTransaction();
