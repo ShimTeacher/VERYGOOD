@@ -1,1 +1,1 @@
-include ':app', ':library', ':librarySweet', ':circleimageview'
+include ':app', ':library', ':librarySweet', ':circleimageview', ':ProductTour', 'Tour', ':AppIntro'

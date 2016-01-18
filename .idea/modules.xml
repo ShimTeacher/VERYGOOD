@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AppIntro/AppIntro.iml" filepath="$PROJECT_DIR$/AppIntro/AppIntro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProductTour/ProductTour.iml" filepath="$PROJECT_DIR$/ProductTour/ProductTour.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tour/Tour.iml" filepath="$PROJECT_DIR$/Tour/Tour.iml" />
       <module fileurl="file://$PROJECT_DIR$/VERYGOOD.iml" filepath="$PROJECT_DIR$/VERYGOOD.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/circleimageview/circleimageview.iml" filepath="$PROJECT_DIR$/circleimageview/circleimageview.iml" />

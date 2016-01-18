@@ -9,6 +9,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/AppIntro" />
+            <option value="$PROJECT_DIR$/ProductTour" />
+            <option value="$PROJECT_DIR$/Tour" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/circleimageview" />
             <option value="$PROJECT_DIR$/library" />

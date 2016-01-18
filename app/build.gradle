@@ -6,13 +6,14 @@ android {
 
     defaultConfig {
         applicationId "com.kwmath.www.verygood"
-        minSdkVersion 16
-        targetSdkVersion 23
+        minSdkVersion 15
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
         release {
+            multiDexEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -26,4 +27,5 @@ dependencies {
     compile project(':library')
     compile project(':librarySweet')
     compile project(':circleimageview')
+    compile project(':AppIntro')
 }

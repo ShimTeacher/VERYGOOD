@@ -7,9 +7,12 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +41,8 @@ import java.util.Calendar;
     //TODO 기부페이지-> 내부 결제 페이지를 어떻게 해야하는지 알아본다.
     //TODO 만든이 -> 이미지정보 간단한 프로필을 보여준다.
 
-public class MainActivity extends Activity implements DatePickerDialog.OnDateSetListener, com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener{
+
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener{
 
 
     DbOpenHelper dbOpenhelper;
@@ -51,10 +55,39 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
     donationFragment donationFg = new donationFragment();
     alarmFragment alarmFg = new alarmFragment();
 
+
+
+    @Override
+    protected void onStart() {
+
+//        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+//        String start = prefs.getString("key", null);
+//
+//
+//        if(start==null)
+//        {
+            Intent intent = new Intent(this, Intro.class);
+            startActivity(intent);
+//            SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+//            editor.putString("key", "kwangwoon");
+//            editor.commit();
+//
+//        }
+
+        super.onStart();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intro aActivity = (Intro)Intro.AActivity;
+
+        if(aActivity !=null)
+        {
+            aActivity.finish();
+        }
+
 
 
         menuItemSetting(); //반드시 이 위치에 실행되어야 한다.
@@ -283,6 +316,7 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
 
             }
         });
+
     }
 
 
