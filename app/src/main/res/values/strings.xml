@@ -9,4 +9,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="opensource"> Sweet-alert-dialog \n MaterialDateTimePicker \n CircularFloatingActionMenu \n Circleimageview \n  </string>
 
+    <string name = "whatString"> How are you living each day? How is your day today? Are you dilligently living each day in accordance to your goal? Well if not, don\'t worry. \"Very Good\" offers the opportunity to reflect back on yourself and help you reach your life goal.</string>
+    <string name = "howString"> Very simple. Tap "Very Good" if you feel satisfied with your efforts after looking back at your day (you can add a short comment if you tap and hold long enough). We also provide you with a calendar where you can see your monthly/yearly progress.</string>
+    <string name = "whyString"> So why exactly should you use this app? There are days when you go to sleep in disappointment and regret, and other days when you feel like you\'ve accomplished something great. Truth is, we all have those days. Moreover, there are times when you look at yourself through other people\'s eyes and find how unconfident you are with your own life. Discover yourself and rebuild your motivation through this application.</string>
+
+
+
 </resources>

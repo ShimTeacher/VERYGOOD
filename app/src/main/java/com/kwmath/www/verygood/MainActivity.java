@@ -60,19 +60,19 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     @Override
     protected void onStart() {
 
-//        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-//        String start = prefs.getString("key", null);
-//
-//
-//        if(start==null)
-//        {
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        String start = prefs.getString("key", null);
+
+
+        if(start==null)
+        {
             Intent intent = new Intent(this, Intro.class);
             startActivity(intent);
-//            SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-//            editor.putString("key", "kwangwoon");
-//            editor.commit();
-//
-//        }
+            SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+            editor.putString("key", "kwangwoon");
+            editor.commit();
+
+        }
 
         super.onStart();
     }

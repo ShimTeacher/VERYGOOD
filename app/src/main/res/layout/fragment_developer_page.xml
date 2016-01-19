@@ -30,14 +30,67 @@
                 android:layout_gravity="left" />
 
             <TextView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VERYGOOD is..."
+                android:text="What?"
+                android:textSize="20dp"
                 android:gravity="center_horizontal"
                 android:layout_below="@+id/view"
                 android:textColor="#ffffff"
                 />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/whatString"
+                android:textSize="15dp"
+                android:gravity="center_horizontal"
+                android:layout_below="@+id/view"
+                android:textColor="#ffffff"
+                />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="How?"
+                android:textSize="20dp"
+                android:gravity="center_horizontal"
+                android:layout_below="@+id/view"
+                android:textColor="#ffffff"
+                />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/howString"
+                android:textSize="15dp"
+                android:gravity="center_horizontal"
+                android:layout_below="@+id/view"
+                android:textColor="#ffffff"
+                />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Why?"
+                android:textSize="20dp"
+                android:gravity="center_horizontal"
+                android:layout_below="@+id/view"
+                android:textColor="#ffffff"
+                />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/whyString"
+                android:gravity="center_horizontal"
+                android:layout_below="@+id/view"
+                android:textColor="#ffffff"
+                />
+
+
 
 
             <TextView
@@ -53,7 +106,24 @@
 
 
 
-
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginTop="20dp"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:src="@drawable/sy2"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/dark"
+                android:id="@+id/view2"
+                />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Seung Yeop Baek\nIdea Creator\n a bachelor of \nChemical Engineering(SNUST)\n Like Jim Eliot"
+                android:textColor="#ffffff"
+                android:layout_below="@+id/view"
+                />
 
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -75,24 +145,7 @@
                 android:textColor="#ffffff"
                 />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_marginTop="20dp"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:src="@drawable/sy2"
-                app:civ_border_width="2dp"
-                app:civ_border_color="@color/dark"
-                android:id="@+id/view2"
-                />
-            <TextView
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Seung Yeop Baek\nIdea Creator\n a bachelor of \nChemical Engineering(SNUST)\n Like Jim Eliot"
-                android:textColor="#ffffff"
-                android:layout_below="@+id/view"
-                />
+
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_marginTop="20dp"
