@@ -2,6 +2,7 @@ package com.kwmath.www.verygood;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 
 import com.kwmath.www.verygood.fragment.alarmFragment;
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Intro aActivity = (Intro)Intro.AActivity;
 
@@ -86,12 +89,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             aActivity.finish();
         }
 
-
-
         menuItemSetting(); //반드시 이 위치에 실행되어야 한다.
         img =(ImageView) findViewById(R.id.goodBtn);
-
-
 
     }
 
@@ -222,10 +221,17 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
                     if(cursor.getCount()==0)
                     {
+
+
+
+
+
                         cal= Calendar.getInstance();
                         cal.set(2016,11,31);
+
                         CalendarList.add(cal);
                         temp=1;
+
                     }
                     else {
                         if (cursor.moveToFirst()) {
@@ -238,6 +244,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
 
                                 if (checked == 1) {
+
+
                                     cal = Calendar.getInstance();
                                     cal.set(dbYear, dbMonth, dbDay);
                                     CalendarList.add(cal);
@@ -245,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                                 }
                                 else {
                                     cal= Calendar.getInstance();
+
                                     cal.set(2016,11,31);
                                     CalendarList.add(cal);
                                     temp=1;
@@ -282,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     String highlightDays = new Integer(dpd.getSelectableDays().length-temp).toString();
                     dpd.set365Text(highlightDays+ "/365");
                     Calendar today = Calendar.getInstance();
-                    dpd.setMonthText(highlightMonth+"/"+today.getActualMaximum(Calendar.DATE));
+                    dpd.setMonthText(highlightMonth+ "/"+today.getActualMaximum(Calendar.DATE));
                     dpd.show(getFragmentManager(), "Datepickerdialog");
 
                 }catch (Exception e) {

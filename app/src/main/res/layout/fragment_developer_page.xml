@@ -192,7 +192,8 @@
 
             <Button
                 android:layout_width="150dp"
-                android:layout_height="35dp"
+                android:layout_height="50dp"
+                android:textSize="10dp"
                 android:text="Show AppIntro"
                 android:layout_marginTop="30dp"
                 android:id="@+id/AppIntro" />

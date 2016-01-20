@@ -1,5 +1,6 @@
 package com.kwmath.www.verygood.fragment;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -56,7 +57,7 @@ public class homeFragment extends Fragment {
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Are you sure?")
                 .setContentText("It will be unchecked.")
-                .setConfirmText("Yes,I want to uncheck it!")
+                .setConfirmText("Yes,I want")
                 .setCancelText("No")
                 .showCancelButton(true)
 
@@ -68,7 +69,7 @@ public class homeFragment extends Fragment {
                         img.setImageResource(R.drawable.black);
                         sDialog
                                 .setTitleText("Unchecked!")
-                                .setContentText("ThumbsUP has been unchecked!")
+                                .setContentText("VERYGOOD has been unchecked")
                                 .setConfirmText("OK")
                                 .setConfirmClickListener(null)
                                 .showCancelButton(false)
@@ -219,7 +220,6 @@ public class homeFragment extends Fragment {
             img.setImageResource(R.drawable.black);
             isclicked = false;
          }
-
 
 
         return view;
