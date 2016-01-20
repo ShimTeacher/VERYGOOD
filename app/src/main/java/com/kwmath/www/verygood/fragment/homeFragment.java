@@ -1,14 +1,12 @@
-package com.kwmath.www.verygood;
+package com.kwmath.www.verygood.fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 
 import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.kwmath.www.verygood.DatabaseHelper;
+import com.kwmath.www.verygood.DbOpenHelper;
+import com.kwmath.www.verygood.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -212,7 +215,7 @@ public class homeFragment extends Fragment {
         }
         else
         {
-            Toast.makeText(getActivity(),"오늘도 좋은 하루 보내셨나요? ",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),R.string.AppIntroFirstTitle,Toast.LENGTH_SHORT).show();
             img.setImageResource(R.drawable.black);
             isclicked = false;
          }

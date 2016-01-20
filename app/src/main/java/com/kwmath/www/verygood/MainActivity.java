@@ -2,29 +2,27 @@ package com.kwmath.www.verygood;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.kwmath.www.verygood.fragment.alarmFragment;
+import com.kwmath.www.verygood.fragment.calendarFragment;
+import com.kwmath.www.verygood.fragment.developerPageFragment;
+import com.kwmath.www.verygood.fragment.donationFragment;
+import com.kwmath.www.verygood.fragment.homeFragment;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-import com.wdullaer.materialdatetimepicker.date.MonthAdapter;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -201,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 {
                    // Log.v(TAG,"데이터베이스 열리지 않습니다");
                 }
+
 
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog dpd = DatePickerDialog.newInstance(

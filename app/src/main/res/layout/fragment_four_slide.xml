@@ -15,8 +15,8 @@
         android:layout_weight="1.18">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:src="@drawable/vrg2"/>
@@ -32,7 +32,7 @@
         android:textColor="#ffffff"
         android:paddingRight="32dp"
         android:textSize="28sp"
-        android:text="VERY GOOD!"/>
+        android:text="@string/AppIntrofourthTitle"/>
 
 
     <TextView
@@ -45,7 +45,7 @@
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
         android:textSize="16sp"
-        android:text="자, 그럼 이제 시작해볼까요 ?"/>
+        android:text="@string/AppIntrofourthString"/>
 
     <TextView
         android:layout_width="fill_parent"

@@ -1,4 +1,4 @@
-package com.kwmath.www.verygood;
+package com.kwmath.www.verygood.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kwmath.www.verygood.DbOpenHelper;
+import com.kwmath.www.verygood.R;
+
 
 public class donationFragment extends Fragment {
     public DbOpenHelper mDbOpenHelper;
@@ -21,7 +24,7 @@ public class donationFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        //개발자가 정의한 디자인 파일을 인플레이션 시킨후 반환된 뷰를 현재 메서드의 반환값으로 지정
+
         View view = inflater.inflate(R.layout.fragment_donation, container, false);
         TextView textView =(TextView)view.findViewById(R.id.textViewinDona);
 

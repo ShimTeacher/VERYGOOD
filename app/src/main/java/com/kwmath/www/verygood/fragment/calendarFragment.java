@@ -1,4 +1,4 @@
-package com.kwmath.www.verygood;
+package com.kwmath.www.verygood.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+
+import com.kwmath.www.verygood.R;
 
 import java.util.Calendar;
 import java.util.Locale;
